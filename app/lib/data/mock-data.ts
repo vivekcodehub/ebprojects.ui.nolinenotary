@@ -21,7 +21,7 @@ export const navLinks: NavLink[] = [
 
 export const cta: CtaButton = {
   label: "BOOK NOW",
-  href: "/book-now",
+  href: "#BookAppointmentSection",
 };
 
 // Hero Banner
