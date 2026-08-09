@@ -45,15 +45,15 @@ export default function HeroSection() {
                         </div>
                         {/* Availability badge */}
                         <div
-                            className="absolute lg:-bottom-4 lg:-left-4 bottom-0 left-0 flex flex-col gap-1 px-5 py-3 bg-primary-yellow"
+                            className="absolute lg:-bottom-4 lg:-left-4 bottom-0 left-0 flex flex-col gap-1 px-5 py-3 bg-neutral-deep-black"
                         >
                             <span
-                                className="body16 !font-bold text-neutral-deep-black uppercase font-mono"
+                                className="body16 !font-bold text-white uppercase font-mono"
                             >
                                 {HERO.badge.label}
                             </span>
                             <span
-                                className="body16 text-neutral-deep-black"
+                                className="body16 text-white"
                             >
                                 {HERO.badge.value}
                             </span>
