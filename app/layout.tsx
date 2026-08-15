@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description: "Notarize your documents online, 24/7.",
     images: ["/og-image.png"],
   },
-  cons: {
+  icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.svg", type: "image/svg+xml"},
