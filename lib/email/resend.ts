@@ -11,9 +11,9 @@ export const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * The address your appointment notifications get sent to.
- * Defaults to asishkv1993@gmail.com but can be overridden via env.
+ * Defaults to info@nolinenotary.com but can be overridden via env.
  */
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "asishkv1993@gmail.com";
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "info@nolinenotary.com";
 
 /**
  * The "From" address Resend sends as.
@@ -22,4 +22,4 @@ export const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "asishkv1993@gmail.com";
  * Once you verify a domain you own, switch this to something like
  * "Appointments <bookings@yourdomain.com>".
  */
-export const FROM_EMAIL = process.env.FROM_EMAIL || "Appointments <onboarding@resend.dev>";
+export const FROM_EMAIL = process.env.FROM_EMAIL || "Appointments <info@nolinenotary.com>";
