@@ -16,10 +16,9 @@ frontend:
         # whose booking form returns a 500 on every request.
         - env | grep -e NEXT_PUBLIC_SUPABASE_URL >> .env.production
         - env | grep -e SUPABASE_SERVICE_ROLE_KEY >> .env.production
-        - env | grep -e RESEND_API_KEY >> .env.production
-        # Optional overrides — lib/email/resend.ts already has sane defaults,
-        # so don't fail the build when these aren't set.
-        - env | grep -e ADMIN_EMAIL -e FROM_EMAIL >> .env.production || true
+        # Optional: lib/pigeon-post.ts falls back to the prod API Gateway URL,
+        # so don't fail the build when this isn't set.
+        - env | grep -e PIGEON_POST_URL >> .env.production || true
         - npm run build
   artifacts:
     baseDirectory: .next

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/contact/validations/contact";
-import { sendContactUsEmail } from "@/lib/contact/pigeon-post";
+import { sendContactUsEmail } from "@/lib/pigeon-post";
 
 export const runtime = "nodejs";
 

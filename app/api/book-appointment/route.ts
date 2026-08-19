@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { format } from "date-fns";
-import { resend, ADMIN_EMAIL, FROM_EMAIL } from "@/lib/email/resend";
-import { buildAdminNotificationEmail, buildUserConfirmationEmail } from "@/lib/email/templates";
+import { sendBookingEmail } from "@/lib/pigeon-post";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import {
   personalDetailsSchema,
@@ -108,53 +107,24 @@ export async function POST(req: NextRequest) {
     const dateLabel = format(date, "EEEE, MMM d, yyyy");
     const timeLabel = `${startLabel} – ${endLabel} (15 Minutes)`;
 
-    const emailData = {
-      fullName: parsed.data.fullName,
-      email: parsed.data.email,
-      secondSignerEmail: parsed.data.secondSignerEmail,
-      phone: parsed.data.phone,
-      message: parsed.data.message,
-      dateLabel,
-      timeLabel,
-    };
-
-    const [affidavitBuffer, governmentIdBuffer] = await Promise.all([
-      affidavit!.arrayBuffer(),
-      governmentId!.arrayBuffer(),
-    ]);
-
-    const attachments = [
-      { filename: affidavit!.name, content: Buffer.from(affidavitBuffer) },
-      { filename: governmentId!.name, content: Buffer.from(governmentIdBuffer) },
-    ];
-
-    const adminEmail = buildAdminNotificationEmail(emailData);
-    const adminResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      replyTo: parsed.data.email,
-      subject: adminEmail.subject,
-      html: adminEmail.html,
-      attachments,
-    });
-
-    if (adminResult.error) {
+    // pigeon-post sends both halves: a generic automated acknowledgement to the
+    // customer, and the appointment details plus both uploads to the business.
+    try {
+      await sendBookingEmail({
+        fullName: parsed.data.fullName,
+        email: parsed.data.email,
+        secondSignerEmail: parsed.data.secondSignerEmail,
+        phone: parsed.data.phone,
+        message: parsed.data.message,
+        dateLabel,
+        timeLabel,
+        attachments: [affidavit!, governmentId!],
+      });
+    } catch (err) {
       // The booking is already saved in the DB at this point — the slot is
-      // correctly reserved even though the notification email failed.
-      // Log it so you can follow up manually; don't undo the booking.
-      console.error("[book-appointment] Admin email failed:", adminResult.error);
-    }
-
-    const userEmail = buildUserConfirmationEmail(emailData);
-    const userResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: parsed.data.email,
-      subject: userEmail.subject,
-      html: userEmail.html,
-    });
-
-    if (userResult.error) {
-      console.error("[book-appointment] Confirmation email failed:", userResult.error);
+      // correctly reserved even though the notification failed. Log it so you
+      // can follow up manually; don't undo the booking or fail the request.
+      console.error("[book-appointment] pigeon-post request failed:", err);
     }
 
     return NextResponse.json({ success: true });
