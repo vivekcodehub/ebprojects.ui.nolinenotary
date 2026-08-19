@@ -1,0 +1,31 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        # Amplify console env vars are BUILD-time only. Next.js API routes and
+        # server components can't read them at runtime unless we write them into
+        # .env.production here, before `next build`.
+        # https://docs.aws.amazon.com/amplify/latest/userguide/ssr-environment-variables.html
+        #
+        # No `|| true` on these: if a required var is missing, grep exits non-zero
+        # and the build fails loudly. That is much better than deploying a site
+        # whose booking form returns a 500 on every request.
+        - env | grep -e NEXT_PUBLIC_SUPABASE_URL >> .env.production
+        - env | grep -e SUPABASE_SERVICE_ROLE_KEY >> .env.production
+        - env | grep -e RESEND_API_KEY >> .env.production
+        # Optional overrides — lib/email/resend.ts already has sane defaults,
+        # so don't fail the build when these aren't set.
+        - env | grep -e ADMIN_EMAIL -e FROM_EMAIL >> .env.production || true
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*

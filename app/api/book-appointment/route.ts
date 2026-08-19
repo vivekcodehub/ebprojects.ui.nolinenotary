@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { format } from "date-fns";
 import { resend, ADMIN_EMAIL, FROM_EMAIL } from "@/lib/email/resend";
 import { buildAdminNotificationEmail, buildUserConfirmationEmail } from "@/lib/email/templates";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase";
 import {
   personalDetailsSchema,
   MAX_FILE_SIZE_BYTES,
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
     // double-booking: the `unique (booking_date, booking_time)` constraint
     // makes the database reject a second insert for the same slot, even
     // if two people submit at the exact same moment. ----
-    const { error: insertError } = await supabaseAdmin.from("bookings").insert({
+    const { error: insertError } = await getSupabaseAdmin().from("bookings").insert({
       booking_date: bookingDate,
       booking_time: time,
       full_name: parsed.data.fullName,

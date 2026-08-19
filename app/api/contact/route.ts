@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { resend, ADMIN_EMAIL, FROM_EMAIL } from "@/lib/email/resend";
 import { contactFormSchema } from "@/lib/contact/validations/contact";
-import {
-  buildContactAdminEmail,
-  buildContactConfirmationEmail,
-} from "@/lib/contact/email/contact-templates";
+import { sendContactUsEmail } from "@/lib/contact/pigeon-post";
 
 export const runtime = "nodejs";
 
@@ -21,22 +17,12 @@ export async function POST(req: NextRequest) {
 
     const { fullName, email, serviceType, message } = parsed.data;
 
-    const adminEmail = buildContactAdminEmail({
-      fullName,
-      email,
-      serviceType,
-      message,
-    });
-    const adminResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      replyTo: email,
-      subject: adminEmail.subject,
-      html: adminEmail.html,
-    });
-
-    if (adminResult.error) {
-      console.error("[contact] Admin email failed:", adminResult.error);
+    // pigeon-post sends both halves: the acknowledgement to the customer and
+    // the enquiry details to the business inbox.
+    try {
+      await sendContactUsEmail({ fullName, email, serviceType, message });
+    } catch (err) {
+      console.error("[contact] pigeon-post request failed:", err);
       return NextResponse.json(
         {
           error:
@@ -44,25 +30,6 @@ export async function POST(req: NextRequest) {
         },
         { status: 502 },
       );
-    }
-
-    const confirmationEmail = buildContactConfirmationEmail({
-      fullName,
-      email,
-      serviceType,
-      message,
-    });
-    const userResult = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject: confirmationEmail.subject,
-      html: confirmationEmail.html,
-    });
-
-    if (userResult.error) {
-      // Owner already has the inquiry — don't fail the whole request,
-      // just log it so you can manually follow up.
-      console.error("[contact] Confirmation email failed:", userResult.error);
     }
 
     return NextResponse.json({ success: true });

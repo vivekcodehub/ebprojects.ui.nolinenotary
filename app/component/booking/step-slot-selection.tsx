@@ -26,6 +26,9 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
 
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [loadingAvailability, setLoadingAvailability] = useState(false);
+  const [availabilityFailed, setAvailabilityFailed] = useState(false);
+  /** Bumped by the "Try again" button to re-run the availability fetch. */
+  const [reloadKey, setReloadKey] = useState(0);
 
   const allSlots = useMemo(() => generateTimeSlots(9, 18, 15), []);
   const grouped = useMemo(() => groupSlotsByPeriod(allSlots), [allSlots]);
@@ -42,17 +45,30 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
 
     let cancelled = false;
     setLoadingAvailability(true);
+    setAvailabilityFailed(false);
     setBookedTimes([]);
 
     const dateParam = format(date, "yyyy-MM-dd");
 
     fetch(`/api/available-slots?date=${dateParam}`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        // A failed route can reply with an HTML error page, so check the
+        // status before trying to parse — otherwise res.json() throws and
+        // the real reason (a 500) is lost.
+        if (!res.ok) throw new Error(`Availability request failed: ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
-        if (!cancelled) setBookedTimes(data.bookedTimes ?? []);
+        if (cancelled) return;
+        setBookedTimes(data.bookedTimes ?? []);
+        setError(null);
       })
       .catch(() => {
-        if (!cancelled) setError("Couldn't load availability. Please try again.");
+        if (cancelled) return;
+        // Fail closed: without a known booked list we can't tell which slots
+        // are free, so don't let the user pick one that may already be taken.
+        setAvailabilityFailed(true);
+        setError("Couldn't load availability. Please try again.");
       })
       .finally(() => {
         if (!cancelled) setLoadingAvailability(false);
@@ -61,7 +77,7 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
     return () => {
       cancelled = true;
     };
-  }, [date]);
+  }, [date, reloadKey]);
 
   const isSlotBookedOrPast = (slotValue: string) => {
     if (bookedTimes.includes(slotValue)) return true;
@@ -87,6 +103,10 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
     0;
 
   const handleNext = () => {
+    if (availabilityFailed) {
+      setError("Couldn't load availability. Please try again.");
+      return;
+    }
     if (!date) {
       setError("Please select a date.");
       return;
@@ -132,6 +152,19 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
           {date ? (
             loadingAvailability ? (
               <p className="body12 text-neutral-light-grey italic">Checking availability…</p>
+            ) : availabilityFailed ? (
+              <div className="space-y-2">
+                <p className="text-sm text-red-500">
+                  Couldn&apos;t load availability for this day.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setReloadKey((k) => k + 1)}
+                  className="body14 underline cursor-pointer text-neutral-deep-black"
+                >
+                  Try again
+                </button>
+              </div>
             ) : hasAnySlots ? (
               <div className="space-y-4 max-h-72 overflow-y-auto pr-1">
                 {(["Morning", "Afternoon", "Evening"] as const).map((period) =>
