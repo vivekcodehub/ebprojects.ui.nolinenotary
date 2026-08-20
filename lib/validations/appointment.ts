@@ -1,7 +1,20 @@
 import { z } from "zod";
 
-export const MAX_FILE_SIZE_MB = 5;
+export const MAX_FILE_SIZE_MB = 4;
 export const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+/**
+ * Both uploads travel in one request to /api/book-appointment, and Amplify's
+ * SSR compute runs on Lambda, which caps a request at 6MB once base64-encoded
+ * — about 4.5MB of raw bytes. Measured against production: 4.4MB combined
+ * succeeds, 4.5MB returns 413. 4MB leaves headroom for the form fields and
+ * multipart boundaries.
+ *
+ * This is the binding constraint, not the per-file limit: two 4MB files are
+ * rejected even though each is individually within MAX_FILE_SIZE_MB.
+ */
+export const MAX_COMBINED_SIZE_MB = 4;
+export const MAX_COMBINED_SIZE_BYTES = MAX_COMBINED_SIZE_MB * 1024 * 1024;
 
 export const ACCEPTED_FILE_TYPES = [
   "application/pdf",

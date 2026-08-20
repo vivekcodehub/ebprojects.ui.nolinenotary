@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import {
   MAX_FILE_SIZE_BYTES,
   MAX_FILE_SIZE_MB,
+  MAX_COMBINED_SIZE_BYTES,
+  MAX_COMBINED_SIZE_MB,
   ACCEPTED_FILE_TYPES,
   type PersonalDetailsValues,
 } from "@/lib/validations/appointment";
@@ -106,6 +108,20 @@ export function StepUploadDocuments({
       return;
     }
     setErrors({});
+
+    // Both files ride in a single request, so the combined size is what the
+    // platform actually limits — catch it here rather than letting the upload
+    // run to completion and come back as an opaque 413.
+    const combined = affidavit!.size + governmentId!.size;
+    if (combined > MAX_COMBINED_SIZE_BYTES) {
+      setSubmitError(
+        `Your two documents come to ${(combined / 1024 / 1024).toFixed(1)}MB. ` +
+          `They must be ${MAX_COMBINED_SIZE_MB}MB or less in total — please upload smaller files.`
+      );
+      setStatus("error");
+      return;
+    }
+
     setSubmitError(null);
     setStatus("submitting");
 
@@ -187,6 +203,13 @@ export function StepUploadDocuments({
           error={errors.governmentId}
         />
       </div>
+
+      <p className="body12 text-neutral-40 mt-3">
+        PDF, JPG or PNG. Both documents together must be {MAX_COMBINED_SIZE_MB}MB or less
+        {affidavit && governmentId
+          ? ` — currently ${((affidavit.size + governmentId.size) / 1024 / 1024).toFixed(1)}MB.`
+          : "."}
+      </p>
 
       <div className="mt-8 border border-neutral-40 p-4 flex flex-col items-start gap-3">
         <p className="body14 !font-medium uppercase text-neutral-10 mb-1">

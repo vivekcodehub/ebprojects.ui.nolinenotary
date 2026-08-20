@@ -5,6 +5,9 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 import {
   personalDetailsSchema,
   MAX_FILE_SIZE_BYTES,
+  MAX_FILE_SIZE_MB,
+  MAX_COMBINED_SIZE_BYTES,
+  MAX_COMBINED_SIZE_MB,
   ACCEPTED_FILE_TYPES,
 } from "@/lib/validations/appointment";
 
@@ -12,7 +15,7 @@ export const runtime = "nodejs";
 
 function validateFile(file: File | null, label: string): string | null {
   if (!file || file.size === 0) return `${label} is required`;
-  if (file.size > MAX_FILE_SIZE_BYTES) return `${label} must be smaller than 5MB`;
+  if (file.size > MAX_FILE_SIZE_BYTES) return `${label} must be smaller than ${MAX_FILE_SIZE_MB}MB`;
   if (!ACCEPTED_FILE_TYPES.includes(file.type)) return `${label} must be a PDF, JPG or PNG file`;
   return null;
 }
@@ -62,6 +65,15 @@ export async function POST(req: NextRequest) {
 
     const govIdError = validateFile(governmentId, "Government ID (Passport)");
     if (govIdError) return NextResponse.json({ error: govIdError }, { status: 400 });
+
+    // Defence in depth: a request this large is normally rejected upstream with
+    // a 413 before it ever reaches here, but don't rely on that.
+    if (affidavit!.size + governmentId!.size > MAX_COMBINED_SIZE_BYTES) {
+      return NextResponse.json(
+        { error: `Both documents together must be ${MAX_COMBINED_SIZE_MB}MB or less.` },
+        { status: 413 }
+      );
+    }
 
     const bookingDate = dateStr; // already "yyyy-MM-dd", stored exactly as received
 
