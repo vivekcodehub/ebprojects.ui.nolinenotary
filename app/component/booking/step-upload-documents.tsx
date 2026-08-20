@@ -126,21 +126,31 @@ export function StepUploadDocuments({
         body: formData,
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
         if (res.status === 409) {
-         
           onSlotTaken();
           return;
         }
-        setSubmitError(data.error || "Something went wrong. Please try again.");
+
+        // Don't assume a JSON body — a 413 from the platform (request too
+        // large) and a 403 from the WAF both return HTML or nothing, and
+        // parsing those blindly throws and hides the real status.
+        const data = await res.json().catch(() => null);
+
+        setSubmitError(
+          data?.error ??
+            (res.status === 413
+              ? `Your documents are too large to upload (${Math.round(
+                  (affidavit!.size + governmentId!.size) / 1024 / 1024 * 10
+                ) / 10}MB total). Please upload smaller files.`
+              : `Something went wrong (error ${res.status}). Please try again.`)
+        );
         setStatus("error");
         return;
       }
 
       setStatus("success");
-    } catch (err) {
+    } catch {
       setSubmitError("Network error. Please check your connection and try again.");
       setStatus("error");
     }
