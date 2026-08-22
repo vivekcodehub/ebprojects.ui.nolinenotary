@@ -29,7 +29,7 @@ export default function ContactUsPage() {
 
                                             <div>
                                                 <p className="body12 text-secondary-black">PHONE</p>
-                                                <p className="title24 text-primar-black">+1 (555) 890-2412</p>
+                                                <p className="title24 text-primar-black">1-416-840-6943</p>
                                             </div>
                                         </li>
                                         <li className="flex gap-4">
@@ -38,7 +38,7 @@ export default function ContactUsPage() {
                                             </div>
                                             <div>
                                                 <p className="body12 text-secondary-black">OFFICIAL EMAIL</p>
-                                                <p className="title24 text-primar-black">registry@noline.com</p>
+                                                <p className="title24 text-primar-black">info@nolinenotary.com</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -70,7 +70,3 @@ export default function ContactUsPage() {
                     buttonShow={true}
                 />
             </main>
-            <Footer/>
-        </>
-    );
-}
