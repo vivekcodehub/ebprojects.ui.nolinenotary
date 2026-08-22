@@ -1,41 +1,63 @@
-import { HOW_ITS_WORKS, HowItsWorks } from "../lib/data/mock-data";
+import { HowItsWorks } from "../lib/data/mock-data";
 
 interface HowItsWorkSectionProps {
-    data: HowItsWorks[];
+  data: HowItsWorks[];
 }
 
 export default function HowItsWorkSection({ data }: HowItsWorkSectionProps) {
-    return (
-        <section className="md:py-20 py-12">
-            <div className="maxContainer">
-                <div className="text-center mb-8">
-                    <span className="tag">HOW IT WORKS</span>
-                    <h2 className="title36 text-primary-black">Seamless Process</h2>
-                </div>
+  return (
+    <section className="bg-neutral-off-white py-12 md:py-20">
+      <div className="maxContainer">
+        <div className="mb-12 text-center">
+          <span className="tag">HOW IT WORKS</span>
+          <h2 className="title36 text-primary-black mt-3">
+            How Online Commissioning Works
+          </h2>
+        </div>
 
-                <div className="relative">
-                    <div className="w-full border-t border-secondary-black absolute top-13 left-0 -z-1 lg:block hidden"></div>
-                    <div className="grid lg:grid-cols-4 grid-cols-1 md:gap-4 gap-8">
-                        {data.map((item) => (
-                            <WorksCards key={item.step} {...item} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {data.map((item, index) => (
+            <WorksCard
+              key={item.step}
+              {...item}
+              isLast={index === data.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function WorksCards({ step, title, text }: HowItsWorks) {
-    return (
-        <div className="flex flex-col items-center text-center">
-            <h3 className={`flex items-center justify-center title36 text-neutral-deep-black border border-neutral-deep-black w-24 h-24 ${step === "4"
-                ? "bg-neutral-deep-black text-white"
-                : "bg-white"
-                }`}
-            >{step}</h3>
-            <h4 className="title18 !font-medium text-primary-black mt-6 mb-1">{title}</h4>
-            <p className="body16 text-primary-black text-pretty">{text}</p>
-        </div>
-    );
+function WorksCard({
+  step,
+  title,
+  text,
+  isLast,
+}: HowItsWorks & { isLast: boolean }) {
+  return (
+    <div className="relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-7">
+      <div
+        className={`title24 mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-neutral-deep-black ${
+          step === "6"
+            ? "bg-neutral-deep-black text-white"
+            : "bg-white text-neutral-deep-black"
+        }`}
+      >
+        {step}
+      </div>
+
+      <h4 className="title18 !font-medium text-primary-black mb-1.5">
+        {title}
+      </h4>
+      <p className="body14 text-neutral-600 text-pretty">{text}</p>
+
+      {!isLast && (
+        <span
+          aria-hidden="true"
+          className="absolute top-11 -right-[10px] hidden h-5 w-5 rotate-45 border-t border-r border-neutral-200 bg-white md:block lg:right-[-11px]"
+        />
+      )}
+    </div>
+  );
 }
