@@ -70,3 +70,7 @@ export default function ContactUsPage() {
                     buttonShow={true}
                 />
             </main>
+            <Footer/>
+        </>
+    );
+}
