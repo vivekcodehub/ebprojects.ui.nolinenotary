@@ -11,7 +11,7 @@ export default function FaqsSection() {
     const visibleCards = showAll ? FAQS_DATA : FAQS_DATA.slice(0, INITIAL_COUNT);
     const hasMore = FAQS_DATA.length > INITIAL_COUNT;
     return (
-        <section className="py-12 md:py-20 bg-neutral-off-white">
+        <section id="services" className="py-12 md:py-20 bg-neutral-off-white">
             <div className="maxContainer">
                 <h2 className="title36 text-primary-black">Notarial Solutions for Every Need</h2>
 
