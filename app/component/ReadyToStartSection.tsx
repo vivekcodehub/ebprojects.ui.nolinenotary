@@ -19,25 +19,31 @@ export default function ReadyToStartSection({
                 <p className="max-w-[660px] mx-auto mb-6">{description}</p>
 
                 <div className="flex lg:flex-row flex-col items-center justify-center gap-4">
-                    <Button
-                        variant="primary"
-                        size="md"
+                    <Link
+                        href="/#BookAppointmentSection"
+                        className="block"
                     >
-                        <Link
-                            href="#BookAppointmentSection"
-                            className="block"
-                        >
-                            BOOK YOUR SESSION NOW
-                        </Link>
-                    </Button>
-
-                    {buttonShow && (
                         <Button
-                            variant="outline"
+                            variant="primary"
                             size="md"
                         >
-                            VIEW SERVICES
+
+                            Book an Online Appointment
+
                         </Button>
+                    </Link>
+
+                    {buttonShow && (
+                        <Link
+                            href="/#services"
+                        >
+                            <Button
+                                variant="outline"
+                                size="md"
+                            >
+                                VIEW SERVICES
+                            </Button>
+                        </Link>
                     )}
                 </div>
             </div>
