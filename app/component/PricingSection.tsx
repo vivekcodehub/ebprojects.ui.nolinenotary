@@ -8,7 +8,7 @@ interface PricingSectionProps {
 
 export default function PricingSection({ data }: PricingSectionProps) {
     return (
-        <section className="py-12 md:py-20">
+        <section className="py-12 md:py-20" id="prcing">
             <div className="maxContainer">
                 <div className="text-center mb-8">
                     <span className="tag">Pricing</span>
@@ -75,19 +75,18 @@ function PricingCard({ title, price, priceText, description, listItem, bgColor }
                 </ul>
             </div>
 
-
-            <Button variant="outline" size="sm" className={`w-full ${bgColor === "dark"
-                ? "!bg-primary-yellow"
-                : ""
-                }`}
+            <Link
+                href="#BookAppointmentSection"
+                className="block"
             >
-                <Link
-                    href="#BookAppointmentSection"
-                    className="block"
+                <Button variant="outline" size="sm" className={`w-full ${bgColor === "dark"
+                    ? "!bg-primary-yellow"
+                    : ""
+                    }`}
                 >
                     GET STARTED
-                </Link>
-            </Button>
+                </Button>
+            </Link>
         </div>
     );
 }
