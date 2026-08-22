@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -39,8 +38,8 @@ export default function Navbar() {
                                     key={link.href}
                                     href={link.href}
                                     className={`body16 text-[var(--neutral-deep-black)] underline-offset-8 transition-colors hover:text-primary-yellow ${isActive
-                                            ? "underline decoration-black decoration-2"
-                                            : ""
+                                        ? "underline decoration-black decoration-2"
+                                        : ""
                                         }`}
                                 >
                                     {link.label}
@@ -48,9 +47,11 @@ export default function Navbar() {
                             );
                         })}
 
-                        <Button variant="primary" size="md">
-                            <Link href={cta.href}>{cta.label}</Link>
-                        </Button>
+                        <Link href={cta.href}>
+                            <Button variant="primary" size="md">
+                                {cta.label}
+                            </Button>
+                        </Link>
                     </nav>
 
                     {/* Hamburger button */}
@@ -78,8 +79,8 @@ export default function Navbar() {
                 {/* Mobile menu */}
                 <div
                     className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${isOpen
-                            ? "max-h-60 opacity-100"
-                            : "max-h-0 opacity-0"
+                        ? "max-h-60 opacity-100"
+                        : "max-h-0 opacity-0"
                         }`}
                 >
                     <nav className="flex flex-col gap-4 pb-4 pt-8">
@@ -95,8 +96,8 @@ export default function Navbar() {
                                     href={link.href}
                                     onClick={() => setIsOpen(false)}
                                     className={`body16 text-[var(--neutral-deep-black)] transition-colors ${isActive
-                                            ? "underline decoration-black decoration-2 underline-offset-8"
-                                            : ""
+                                        ? "underline decoration-black decoration-2 underline-offset-8"
+                                        : ""
                                         }`}
                                 >
                                     {link.label}
