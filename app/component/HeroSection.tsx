@@ -11,7 +11,6 @@ export default function HeroSection() {
                 <div className="flex flex-col justify-between gap-8 lg:flex-row md:items-center md:gap-14">
                     {/* Text column */}
                     <div className="flex flex-col gap-4 lg:w-1/2">
-                        <span className="tag">{HERO.tag}</span>
                         <h1
                             className="title56 text-neutral-10"
                         >
@@ -23,11 +22,11 @@ export default function HeroSection() {
                             {HERO.description}
                         </p>
                         <div className="flex flex-wrap items-center gap-4">
-                            <Button variant="primary" size="md">
-                                <Link href={HERO.primaryCta.href}>
+                            <Link href={HERO.primaryCta.href}>
+                                <Button variant="primary" size="md">
                                     {HERO.primaryCta.label}
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         </div>
                     </div>
 
@@ -42,21 +41,6 @@ export default function HeroSection() {
                                 className="object-cover"
                                 priority
                             />
-                        </div>
-                        {/* Availability badge */}
-                        <div
-                            className="absolute lg:-bottom-4 lg:-left-4 bottom-0 left-0 flex flex-col gap-1 px-5 py-3 bg-neutral-deep-black"
-                        >
-                            <span
-                                className="body16 !font-bold text-white uppercase font-mono"
-                            >
-                                {HERO.badge.label}
-                            </span>
-                            <span
-                                className="body16 text-white"
-                            >
-                                {HERO.badge.value}
-                            </span>
                         </div>
                     </div>
                 </div>
