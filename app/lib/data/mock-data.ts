@@ -54,9 +54,10 @@ export interface HeroContent {
 
 export const HERO: HeroContent = {
   tag: "Online Notary & Commissioner of Oaths Services in Ontario",
-  title: "Get Your Affidavit or Statutory Declaration Commissioned Online",
-  description: `No Line Notary provides fast and convenient online commissioning services across Ontario. Meet with an authorized Commissioner for Taking Affidavits by secure video conference and complete eligible affidavits, statutory declarations, oaths and declarations without travelling to an office.
-Appointments are available online, allowing clients throughout Ontario to complete eligible documents from home, work or virtually anywhere with an internet connection.`,
+  title: "Online Notary & Commissioner of Oaths Across Ontario",
+  description: `Get eligible affidavits, statutory declarations and other documents commissioned online by secure video from anywhere in Ontario. Fast, convenient appointments with an Ontario lawyer and Commissioner for Taking Affidavits.
+
+No Line Notary provides fast and convenient online commissioning services throughout Ontario, including Toronto, Ottawa, Mississauga, Brampton, Hamilton, London, Kitchener, Waterloo, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Barrie, Kingston, Windsor, Oshawa, Whitby, Peterborough, Sudbury, Thunder Bay and communities throughout the province.. Meet with an authorized Commissioner for Taking Affidavits by secure video conference and complete eligible affidavits, statutory declarations, oaths and declarations without travelling to an office. Appointments are available online, allowing clients throughout Ontario to complete eligible documents from home, work or virtually anywhere with an internet connection.`,
   primaryCta: {
     label: "Book an Online Appointment",
     href: "#BookAppointmentSection",
