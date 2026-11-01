@@ -13,6 +13,7 @@ type BreadcrumbProps = {
   items?: BreadcrumbItem[];
   labels?: Record<string, string>;
   // homeLabel?: string;
+  noLinkSegments?: string[];
   className?: string;
 };
 
@@ -25,6 +26,7 @@ export default function Breadcrumb({
   items,
   labels = {},
   // homeLabel = "Home",
+    noLinkSegments = ["services"],
   className = "",
 }: BreadcrumbProps) {
   const pathname = usePathname();
@@ -38,7 +40,9 @@ export default function Breadcrumb({
         .filter(Boolean)
         .map((segment, i, arr) => ({
           label: labels[segment] ?? toLabel(segment),
-          href: "/" + arr.slice(0, i + 1).join("/"),
+           href: noLinkSegments.includes(segment)
+            ? undefined
+            : "/" + arr.slice(0, i + 1).join("/"),
         })),
     ];
 
@@ -55,7 +59,7 @@ export default function Breadcrumb({
               {isLast || !crumb.href ? (
                 <span
                   aria-current={isLast ? "page" : undefined}
-                  className="text-neutral-grey-85/60"
+                  className={isLast ? "text-neutral-grey-85/60" : "text-neutral-grey-85"}
                 >
                   {crumb.label}
                 </span>
