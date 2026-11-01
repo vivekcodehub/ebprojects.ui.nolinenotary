@@ -24,6 +24,7 @@ export default function ServicesHero({ data }: ServicesHeroProps) {
                         ))}
                     </div>
 
+
                     <div className="relative lg:min-h-[546px] flex flex-col lg:p-10">
                         <Image
                             src={data.backgroundImage}
@@ -34,28 +35,30 @@ export default function ServicesHero({ data }: ServicesHeroProps) {
                             className="hidden lg:block object-cover object-center"
                         />
 
-                        <div className="relative z-10 flex flex-col h-full flex-1 justify-between border border-secondary-black bg-[rgba(248,249,255,1)] lg:p-6 p-4">
-                            <div>
-                                <h4 className="title24 text-neutral-10 mb-2">{data.card.title}</h4>
-                                <p className="title36 text-neutral-10">{data.card.price}</p>
+                        {data.card.title && (
+                            <div className="relative z-10 flex flex-col h-full flex-1 justify-between border border-secondary-black bg-[rgba(248,249,255,1)] lg:p-6 p-4">
+                                <div>
+                                    <h4 className="title24 text-neutral-10 mb-2">{data.card.title}</h4>
+                                    <p className="title36 text-neutral-10">{data.card.price}</p>
 
-                                <ul className="mt-8 space-y-3">
-                                    {data.card.items.map((item) => (
-                                        <li
-                                            key={item.label}
-                                            className="flex justify-between body14 text-neutral-10"
-                                        >
-                                            <p>{item.label}</p>
-                                            <h5 className="!font-medium">{item.price}</h5>
-                                        </li>
-                                    ))}
-                                </ul>
+                                    <ul className="mt-8 space-y-3">
+                                        {data.card.items.map((item) => (
+                                            <li
+                                                key={item.label}
+                                                className="flex justify-between body14 text-neutral-10"
+                                            >
+                                                <p>{item.label}</p>
+                                                <h5 className="!font-medium">{item.price}</h5>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <Link href={data.card.ctaHref} className="block w-full mt-8">
+                                    <Button className="w-full">{data.card.ctaLabel}</Button>
+                                </Link>
                             </div>
-
-                            <Link href={data.card.ctaHref} className="block w-full mt-8">
-                                <Button className="w-full">{data.card.ctaLabel}</Button>
-                            </Link>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>
