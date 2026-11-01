@@ -1,36 +1,48 @@
 "use client";
 
-import { FAQ_DATA } from "@/app/lib/data/mock-data";
+import { FAQ_DATA, FAQItem } from "@/app/lib/data/mock-data";
 import { useState } from "react";
 import FaqsAccordion from "./FaqsAccordion";
 
-export default function FaqsSection() {
-    const [activeId, setActiveId] = useState<number>(1);
+interface FaqsSectionProps {
+    tag?: string;
+    title?: string;
+    description?: string;
+    items?: FAQItem[];
+    defaultOpenId?: number | null;
+    className?: string;
+}
+
+export default function FaqsSection({
+    tag,
+    title,
+    description,
+    items = FAQ_DATA,
+    defaultOpenId = items[0]?.id ?? null,
+    className = "",
+}: FaqsSectionProps) {
+    const [activeId, setActiveId] = useState<number | null>(defaultOpenId);
 
     return (
-        <section className="py-12 md:py-20">
+        <section className={`py-12 md:py-20 ${className}`}>
             <div className="maxContainer">
                 <div className="grid lg:grid-cols-[546px_1fr] gap-10">
                     <div>
-                        <span className="tag">FAQ</span>
-                        <h2 className="title36 text-primary-black">
-                            Common Questions
-                        </h2>
-
-                        <p className="body16 text-neutral-10">
-                            Quick answers to frequently asked procedural questions regarding
-                            our notarial services.
-                        </p>
+                        {tag && <span className="tag">{tag}</span>}
+                        <h2 className="title36 text-primary-black">{title}</h2>
+                        {description && (
+                            <p className="body16 text-neutral-10">{description}</p>
+                        )}
                     </div>
 
                     <div>
-                        {FAQ_DATA.map((item) => (
+                        {items.map((item) => (
                             <FaqsAccordion
                                 key={item.id}
                                 item={item}
                                 isOpen={activeId === item.id}
                                 onToggle={() =>
-                                    setActiveId(activeId === item.id ? 0 : item.id)
+                                    setActiveId(activeId === item.id ? null : item.id)
                                 }
                             />
                         ))}

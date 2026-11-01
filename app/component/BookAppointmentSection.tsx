@@ -2,7 +2,7 @@ import { BookAppointmentForm } from "./booking/book-appointment-form";
 
 export default function BookAppointmentSection() {
     return (
-        <section id="BookAppointmentSection" className="py-12 md:py-20">
+        <section id="BookAppointmentSection" className="py-12 md:py-20 scroll-mt-24">
             <div className="maxContainer">
                 <div className="grid xl:grid-cols-[500px_1fr] gap-8 lg:gap-10 ">
                     <div className="">

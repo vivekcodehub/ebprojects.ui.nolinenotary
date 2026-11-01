@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
 
 /* Color Variables */
 
@@ -19,6 +18,8 @@
   --neutral-30: rgba(224, 221, 207, 1);
   --neutral-40: rgba(84, 95, 115, 1);
   --neutral-off-white: rgba(248, 249, 255, 1);
+  --neutral-grey-85: rgba(85, 85, 85, 1);
+  --neutral-grey-80: rgba(255, 255, 255, 1);
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -68,6 +69,8 @@
   --color-neutral-10: var(--neutral-10);
   --color-neutral-20: var(--neutral-20);
   --color-neutral-off-white: var(--neutral-off-white);
+  --color-neutral-grey-85: var(--neutral-grey-85);
+  --color-neutral-grey-80: var(--neutral-grey-80);
   --color-neutral-30: var(--neutral-30);
   --color-neutral-40: var(--neutral-40);
   --color-neutral-yellow-light: var(--neutral-yellow-light);
@@ -148,6 +151,7 @@ body {
   font-weight: 500;
   line-height: 120%;
   letter-spacing: -0.96px;
+  text-wrap: pretty;
 }
 
 .title26 {
@@ -181,6 +185,12 @@ body {
   line-height: 24px;
 }
 
+.parabold {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 24px;
+}
+
 .body14 {
   font-size: 0.875rem;
   font-weight: 400;
@@ -200,6 +210,9 @@ body {
 
   .title36 {
     font-size: 1.5rem;
+  }
+  .body18 {
+    font-size: 1rem;
   }
 }
 

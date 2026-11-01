@@ -8,7 +8,7 @@ interface PricingSectionProps {
 
 export default function PricingSection({ data }: PricingSectionProps) {
     return (
-        <section className="py-12 md:py-20" id="prcing">
+        <section className="py-12 md:py-20" id="pricingSection">
             <div className="maxContainer">
                 <div className="text-center mb-8">
                     <span className="tag">Pricing</span>
