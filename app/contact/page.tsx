@@ -63,14 +63,18 @@ export default function ContactUsPage() {
                     </div>
                 </section>
 
-                <FaqsSection />
+                <FaqsSection
+                    tag="FAQ"
+                    title="Common Questions"
+                    description="Quick answers to frequently asked procedural questions regarding our notarial services."
+                />
 
                 <ReadyToStartSection
                     title="Ready to secure your legal documents?"
                     buttonShow={true}
                 />
             </main>
-            <Footer/>
+            <Footer />
         </>
     );
 }

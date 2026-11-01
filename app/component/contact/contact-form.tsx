@@ -1,16 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { contactFormSchema, ContactFormValues, SERVICE_TYPES } from "@/lib/contact/validations/contact";
 import Button from "../ui/atoms/Button";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  const resetCaptcha = () => {
+    recaptchaRef.current?.reset();
+    setCaptchaToken(null);
+  };
 
   const {
     register,
@@ -27,6 +37,14 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: ContactFormValues) => {
+
+    if (!captchaToken) {
+      setSubmitError("Please complete the captcha.");
+      setStatus("error");
+      return;
+    }
+
+
     setSubmitError(null);
     setStatus("submitting");
 
@@ -34,13 +52,14 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, recaptchaToken: captchaToken }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
         setSubmitError(data.error || "Something went wrong. Please try again.");
+        resetCaptcha();
         setStatus("error");
         return;
       }
@@ -48,6 +67,7 @@ export function ContactForm() {
       setStatus("success");
     } catch {
       setSubmitError("Network error. Please check your connection and try again.");
+      resetCaptcha();
       setStatus("error");
     }
   };
@@ -156,6 +176,17 @@ export function ContactForm() {
           />
           {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message.message}</p>}
         </div>
+
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+          onChange={(token) => {
+            setCaptchaToken(token);
+            setSubmitError(null);
+          }}
+          onExpired={() => setCaptchaToken(null)}
+          onErrored={() => setCaptchaToken(null)}
+        />
 
         {submitError && <p className="text-sm text-red-500">{submitError}</p>}
 

@@ -10,7 +10,7 @@ export default function Footer() {
                     <div>
                         <Link href={"#"}>
                             <Image
-                                src={'images/logo.svg'}
+                                src={'/images/logo.svg'}
                                 width={107}
                                 height={70}
                                 alt="Noline Notary"

@@ -15,8 +15,8 @@ export default function TestimonialsSection({ testimonial }: TestimonialsSection
                 </div>
 
                 <div className="grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4">
-                    {testimonial.map((testimonial) => (
-                        <div className="border border-neutral-30 bg-neutral-off-white p-6">
+                    {testimonial.map((testimonial, index) => (
+                        <div key={index} className="border border-neutral-30 bg-neutral-off-white p-6">
                             <div className="flex gap-1 mb-8">
                                 {Array.from({ length: testimonial.rating }).map((_, index) => (
                                     <Star

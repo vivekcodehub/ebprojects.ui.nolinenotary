@@ -8,10 +8,13 @@ import MapIcon from "@/app/component/svg-icons/MapIcon";
 import BoltIcon from "@/app/component/svg-icons/BoltIocn";
 import { ComponentType, ReactNode, SVGProps } from "react";
 
+export const SITE_URL = "https://nolinenotary.com";
+
 // Navbar
 export interface NavLink {
   label: string;
   href: string;
+  children?: NavLink[];
 }
 
 export interface CtaButton {
@@ -21,13 +24,87 @@ export interface CtaButton {
 
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Pricing", href: "#prcing" },
+  {
+    label: "Services",
+    href: "/services",
+    children: [
+      {
+        label: "Online Commissioner of Oaths",
+        href: "/services/online-commissioner-of-oaths-ontario",
+      },
+      {
+        label: "Affidavits",
+        href: "/services/affidavits-online-ontario",
+      },
+      {
+        label: "Statutory Declarations",
+        href: "/services/statutory-declaration-ontario",
+      },
+      {
+        label: "OSAP Affidavits",
+        href: "/services/osap-affidavit-online",
+      },
+      {
+        label: "Affidavit of Identity",
+        href: "/services/affidavit-of-identity-ontario",
+      },
+      {
+        label: "Common-Law Statutory Declarations",
+        href: "/services/common-law-statutory-declaration",
+      },
+      {
+        label: "Invitation Letters",
+        href: "/services/invitation-letter-canada",
+      },
+      {
+        label: "Travel Consent Letters",
+        href: "/services/travel-consent-letter-canada",
+      },
+      {
+        label: "Powers of Attorney",
+        href: "/services/power-of-attorney-ontario",
+      },
+      {
+        label: "Affidavits of Execution",
+        href: "/services/affidavit-of-execution-ontario",
+      },
+      {
+        label: "Separation Agreement Witnessing",
+        href: "/services/separation-agreement-witness-ontario",
+      },
+      {
+        label: "Ontario Court Forms",
+        href: "/services/ontario-court-forms",
+      },
+      {
+        label: "Passport Statutory Declarations ",
+        href: "/services/passport-statutory-declaration",
+      },
+      {
+        label: "Criminal Record Checks",
+        href: "/services/criminal-record-check-ontario",
+      },
+      {
+        label: "Certified True Copies",
+        href: "/services/certified-true-copy-ontario",
+      },
+      {
+        label: "Documents for Use Outside Canada",
+        href: "/services/documents-for-use-outside-canada",
+      },
+      {
+        label: "Apostille Services",
+        href: "/services/apostille-services",
+      },
+    ],
+  },
+  { label: "Pricing", href: "/#pricingSection" },
   { label: "Contact", href: "/contact" },
 ];
 
 export const cta: CtaButton = {
   label: "Book an Online Appointment",
-  href: "#BookAppointmentSection",
+  href: "/#BookAppointmentSection",
 };
 
 // Hero Banner
@@ -375,7 +452,7 @@ export const footerContacts: FooterContact[] = [
   },
 ];
 
-// Contact us page
+//  ALL FAQS CONTENTS
 export interface FAQItem {
   id: number;
   question: string;
@@ -444,6 +521,66 @@ If you are uncertain, confirm the receiving organization's requirements before y
     question: "Can documents for use outside Canada be completed online?",
     answer:
       "It depends upon the document and the requirements of the destination country. Documents intended for international use may require notarization, an apostille or authentication/legalization. These requirements should be determined before completing the document.",
+  },
+];
+
+export const servicesOnlineCommissionerOfOathsInOntario: FAQItem[] = [
+  {
+    id: 1,
+    question: "Can I get an affidavit commissioned online in Ontario?",
+    answer:
+      "Yes. Ontario permits eligible oaths and declarations to be administered remotely when the requirements of Ontario Regulation 431/20 are satisfied.",
+  },
+  {
+    id: 2,
+    question: "Is an online Commissioner of Oaths legal in Ontario?",
+    answer:
+      "Yes. Remote commissioning is permitted in Ontario as long as the commissioner follows the conditions set out in Ontario Regulation 431/20.",
+  },
+  {
+    id: 3,
+    question: "Do I need to be physically present with the Commissioner?",
+    answer:
+      "No. You meet the Commissioner over a live video call, so you can complete the process from anywhere with a stable internet connection.",
+  },
+  {
+    id: 4,
+    question: "Can I sign my affidavit before my appointment?",
+    answer:
+      "No. Please do not sign in advance. You must sign the document during the live video appointment, in front of the Commissioner.",
+  },
+  {
+    id: 5,
+    question: "What identification do I need?",
+    answer:
+      "You will need a valid, government-issued photo ID such as a passport, driver's licence or provincial photo card.",
+  },
+  {
+    id: 6,
+    question: "Can a Commissioner of Oaths certify a true copy?",
+    answer:
+      "Yes. A Commissioner can certify that a copy is a true copy of the original document, provided the original is shown during the appointment.",
+  },
+  {
+    id: 7,
+    question:
+      "Can you commission an affidavit for an Ontario court case online?",
+    answer:
+      "Yes. Affidavits for Ontario court proceedings can be commissioned remotely when the regulation's requirements are met.",
+  },
+  {
+    id: 8,
+    question:
+      "Will every organization accept a remotely commissioned document?",
+    answer:
+      "Most do, but some organizations have their own rules. We recommend confirming with the receiving organization before your appointment.",
+  },
+  {
+    id: 9,
+    question:
+      "Can more than one person sign documents during the same appointment?",
+    answer:
+      "Yes. Multiple signers can join the same appointment. Each signer must present valid ID and sign in front of the Commissioner.",
   },
 ];
 
@@ -808,7 +945,6 @@ export const COMPARISON: ComparisonCard[] = [
 ];
 
 // Appointment Requirements Section
-
 export const REQUIREMENTS: string[] = [
   "the document requiring commissioning;",
   "valid identification;",
