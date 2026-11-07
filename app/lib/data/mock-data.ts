@@ -198,7 +198,7 @@ export interface Pricing {
 
 export const PRICING_DATA: Pricing[] = [
   {
-    title: "Virtual",
+    title: "Virtual services at",
     price: "$15",
     priceText: "per signature",
     description: "Includes standard document verification and electronic seal.",
@@ -210,7 +210,7 @@ export const PRICING_DATA: Pricing[] = [
     ],
   },
   {
-    title: "Mobile",
+    title: "Mobile at ",
     price: "$25",
     priceText: "per session",
     description:
@@ -225,9 +225,9 @@ export const PRICING_DATA: Pricing[] = [
     bgColor: "dark",
   },
   {
-    title: "In Person",
+    title: "In-person starting at",
     price: "$125",
-    priceText: "starting at",
+    priceText: "",
     description: "Includes standard document verification and electronic seal.",
     listItem: [
       "Single signature notarization",
