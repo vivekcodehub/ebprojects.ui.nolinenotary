@@ -18,7 +18,7 @@ import Button from "../ui/atoms/Button";
 
 interface StepUploadDocumentsProps {
   date: Date;
-  time: string; 
+  time: string;
   details: PersonalDetailsValues;
   onBack: () => void;
   onSlotTaken: () => void;
@@ -116,7 +116,7 @@ export function StepUploadDocuments({
     if (combined > MAX_COMBINED_SIZE_BYTES) {
       setSubmitError(
         `Your two documents come to ${(combined / 1024 / 1024).toFixed(1)}MB. ` +
-          `They must be ${MAX_COMBINED_SIZE_MB}MB or less in total — please upload smaller files.`
+        `They must be ${MAX_COMBINED_SIZE_MB}MB or less in total — please upload smaller files.`
       );
       setStatus("error");
       return;
@@ -155,15 +155,18 @@ export function StepUploadDocuments({
 
         setSubmitError(
           data?.error ??
-            (res.status === 413
-              ? `Your documents are too large to upload (${Math.round(
-                  (affidavit!.size + governmentId!.size) / 1024 / 1024 * 10
-                ) / 10}MB total). Please upload smaller files.`
-              : `Something went wrong (error ${res.status}). Please try again.`)
+          (res.status === 413
+            ? `Your documents are too large to upload (${Math.round(
+              (affidavit!.size + governmentId!.size) / 1024 / 1024 * 10
+            ) / 10}MB total). Please upload smaller files.`
+            : `Something went wrong (error ${res.status}). Please try again.`)
         );
         setStatus("error");
         return;
       }
+      window.gtag?.("event", "conversion", {          // ADD
+        send_to: "AW-709083002/rPapCNzR8-UDEPr-jtIC", // ADD
+      });
 
       setStatus("success");
     } catch {

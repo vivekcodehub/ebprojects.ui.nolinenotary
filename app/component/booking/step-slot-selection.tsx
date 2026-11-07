@@ -20,7 +20,10 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
     return d;
   }, []);
 
-  const [date, setDate] = useState<Date | undefined>(initialDate ?? todayDate);
+  // const [date, setDate] = useState<Date | undefined>(initialDate ?? todayDate);
+  const [date, setDate] = useState<Date | undefined>(
+    initialDate ?? (todayDate.getDay() === 0 ? undefined : todayDate)
+  );
   const [time, setTime] = useState<string | undefined>(initialTime);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +33,7 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
   /** Bumped by the "Try again" button to re-run the availability fetch. */
   const [reloadKey, setReloadKey] = useState(0);
 
-  const allSlots = useMemo(() => generateTimeSlots(9, 18, 15), []);
+  const allSlots = useMemo(() => generateTimeSlots(11, 14, 15), []);
   const grouped = useMemo(() => groupSlotsByPeriod(allSlots), [allSlots]);
 
   const isToday = date ? isSameDay(date, new Date()) : false;
@@ -136,7 +139,7 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
               setDate(d ?? undefined);
               setTime(undefined);
             }}
-            disabled={{ before: todayDate }}
+            disabled={[{ before: todayDate }, { dayOfWeek: [0] }]}
             startMonth={todayDate}
             className="rounded border-0 p-0 w-full bg-transparent"
           />
