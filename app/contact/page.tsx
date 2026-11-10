@@ -29,7 +29,7 @@ export default function ContactUsPage() {
 
                                             <div>
                                                 <p className="body12 text-secondary-black">PHONE</p>
-                                                <p className="title24 text-primar-black">1-416-840-6943</p>
+                                                <p className="title24 text-primar-black">416-840-6943</p>
                                             </div>
                                         </li>
                                         <li className="flex gap-4">
@@ -43,7 +43,7 @@ export default function ContactUsPage() {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="relative mt-8">
+                                {/* <div className="relative mt-8">
                                     <Image
                                         src={'/images/map.png'}
                                         width={534}
@@ -57,7 +57,7 @@ export default function ContactUsPage() {
                                             400
                                             Metro City, MC 90210</p>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

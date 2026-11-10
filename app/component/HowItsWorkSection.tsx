@@ -38,11 +38,7 @@ function WorksCard({
   return (
     <div className="relative flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-7">
       <div
-        className={`title24 mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-neutral-deep-black ${
-          step === "6"
-            ? "bg-neutral-deep-black text-white"
-            : "bg-white text-neutral-deep-black"
-        }`}
+        className={`title24 mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-neutral-deep-black bg-white text-neutral-deep-black`}
       >
         {step}
       </div>
