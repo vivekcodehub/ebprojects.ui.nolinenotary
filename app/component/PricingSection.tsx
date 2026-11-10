@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { Pricing } from "../lib/data/mock-data";
 import { Button } from "./ui/atoms/Button";
+import Image from "next/image";
 
 interface PricingSectionProps {
     data: Pricing[];
+}
+
+function boldPrices(text: string) {
+    return text.split(/(\$\d+)/g).map((part, i) =>
+        part.startsWith("$") ? <strong key={i}>{part}</strong> : part,
+    );
 }
 
 export default function PricingSection({ data }: PricingSectionProps) {
@@ -16,10 +23,21 @@ export default function PricingSection({ data }: PricingSectionProps) {
                     <p className="title18 text-primary-black text-pretty">Professional notarial services with clear, upfront costs.</p>
                 </div>
 
-                <div className="grid lg:grid-cols-3 grid-cols-1 gap-4">
-                    {data.map((items) => (
-                        <PricingCard key={items.title} {...items} />
-                    ))}
+                <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
+                    <>
+                        <Image
+                            src={'/images/legal.jpg'}
+                            width={1200}
+                            height={768}
+                            alt=""
+                            className="object-cover"
+                        />
+                    </>
+                    <>
+                        {data.map((items) => (
+                            <PricingCard key={items.title} {...items} />
+                        ))}
+                    </>
                 </div>
             </div>
         </section>
@@ -28,7 +46,7 @@ export default function PricingSection({ data }: PricingSectionProps) {
 
 function PricingCard({ title, price, priceText, description, listItem, bgColor }: Pricing) {
     return (
-        <div className={`flex flex-col justify-between border border-secondary-black p-5 ${bgColor === "dark"
+        <div className={`flex flex-col justify-between p-5 ${bgColor === "dark"
             ? "bg-neutral-deep-black"
             : "bg-neutral-off-white"
             }`}
@@ -69,7 +87,7 @@ function PricingCard({ title, price, priceText, description, listItem, bgColor }
                             : "text-primary-black"
                             }`}
                         >
-                            {item}
+                            {boldPrices(item)}
                         </li>
                     ))}
                 </ul>

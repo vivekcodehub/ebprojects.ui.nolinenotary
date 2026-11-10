@@ -199,43 +199,42 @@ export interface Pricing {
 export const PRICING_DATA: Pricing[] = [
   {
     title: "Virtual services at",
-    price: "$15",
-    priceText: "per signature",
+    price: "$45",
+    priceText: "first signature witnessed",
     description: "Includes standard document verification and electronic seal.",
     listItem: [
-      "Single signature notarization",
-      "Standard document verification",
-      "Digital seal & record keeping",
-      "Secure identity verification",
+      "$45 for the first signature witnessed",
+      "$15 for the second witnessed",
+      "$10 for each additional signature witnessed",
     ],
   },
-  {
-    title: "Mobile at ",
-    price: "$25",
-    priceText: "per session",
-    description:
-      "Includes secure video link, identity verification (KBA), and digital storage.",
-    listItem: [
-      "Everything in General Notarization",
-      "Remote video signing session",
-      "Multi-state compliance",
-      "KBA & ID credential analysis",
-      "Digital audio/video storage",
-    ],
-    bgColor: "dark",
-  },
-  {
-    title: "In-person starting at",
-    price: "$125",
-    priceText: "",
-    description: "Includes standard document verification and electronic seal.",
-    listItem: [
-      "Single signature notarization",
-      "Standard document verification",
-      "Digital seal & record keeping",
-      "Secure identity verification",
-    ],
-  },
+  // {
+  //   title: "Mobile at ",
+  //   price: "$25",
+  //   priceText: "per session",
+  //   description:
+  //     "Includes secure video link, identity verification (KBA), and digital storage.",
+  //   listItem: [
+  //     "Everything in General Notarization",
+  //     "Remote video signing session",
+  //     "Multi-state compliance",
+  //     "KBA & ID credential analysis",
+  //     "Digital audio/video storage",
+  //   ],
+  //   bgColor: "dark",
+  // },
+  // {
+  //   title: "In-person starting at",
+  //   price: "$125",
+  //   priceText: "",
+  //   description: "Includes standard document verification and electronic seal.",
+  //   listItem: [
+  //     "Single signature notarization",
+  //     "Standard document verification",
+  //     "Digital seal & record keeping",
+  //     "Secure identity verification",
+  //   ],
+  // },
 ];
 
 // Trust Section
@@ -300,14 +299,14 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     rating: 5,
     review:
-      "Professional and reliable. They handled our complex legal documents with care and arrived exactly on time for the mobile signing.",
+      "Professional and reliable. They handled our complex legal documents with care and everything arrived exactly on time.",
     name: "SARAH M.",
     designation: "Corporate Legal Counsel",
   },
   {
     rating: 5,
     review:
-      "Security was my main concern. No Line Notary's encryption and identity verification put my mind at ease immediately.",
+      "Security was my main concern. No Line Notary's identity verification put my mind at ease immediately.",
     name: "JAMES T.",
     designation: "Private Client",
   },
@@ -447,8 +446,8 @@ export const footerContacts: FooterContact[] = [
     label: "info@nolinenotary.com",
   },
   {
-    href: "1-416-840-6943",
-    label: "1-416-840-6943",
+    href: "416-840-6943",
+    label: "416-840-6943",
   },
 ];
 

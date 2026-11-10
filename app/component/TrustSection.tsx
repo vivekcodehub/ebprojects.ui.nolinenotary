@@ -32,7 +32,7 @@ export default function TrustSection({ data, card }: TrustSectionProps) {
                         <div>
                             <span className="tag">TRUST</span>
                             <h2 className="title36 text-primary-black mb-3">Trust Built on Legal Precision.</h2>
-                            <p className="title18 text-primary-black text-pretty">In a field where a single mistake can invalidate a contract, we prioritize accuracy above all else. Our team undergoes continuous training on state-specific statutes.</p>
+                            <p className="title18 text-primary-black text-pretty">In a field where a single mistake can invalidate a contract, we prioritize accuracy above all else. Our team undergoes continuous training on provincial and federal requirements.</p>
                         </div>
 
                         <ul>
