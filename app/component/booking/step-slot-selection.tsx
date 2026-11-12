@@ -33,7 +33,13 @@ export function StepSlotSelection({ initialDate, initialTime, onNext }: StepSlot
   /** Bumped by the "Try again" button to re-run the availability fetch. */
   const [reloadKey, setReloadKey] = useState(0);
 
-  const allSlots = useMemo(() => generateTimeSlots(11, 14, 15), []);
+  // const allSlots = useMemo(() => generateTimeSlots(11, 14, 15), []);
+  // CHANGED: Saturday 11am–2pm, other days 9am–6pm
+  const isSaturday = date?.getDay() === 6;
+  const allSlots = useMemo(
+    () => (isSaturday ? generateTimeSlots(11, 14, 15) : generateTimeSlots(9, 18, 15)),
+    [isSaturday],
+  );
   const grouped = useMemo(() => groupSlotsByPeriod(allSlots), [allSlots]);
 
   const isToday = date ? isSameDay(date, new Date()) : false;
