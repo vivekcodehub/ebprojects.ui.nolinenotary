@@ -29,7 +29,7 @@ export default function ContactUsPage() {
 
                                             <div>
                                                 <p className="body12 text-secondary-black">PHONE</p>
-                                                <p className="title24 text-primar-black">416-840-6943</p>
+                                                <p className="title24 text-primar-black">1 (877) 360-0066</p>
                                             </div>
                                         </li>
                                         <li className="flex gap-4">

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { cta, NavLink, navLinks } from "../lib/data/mock-data";
 import Image from "next/image";
 import Button from "./ui/atoms/Button";
+import Call from "./svg-icons/Call";
 
 const ITEMS_PER_COLUMN = 5;
 
@@ -128,6 +129,7 @@ export default function Navbar() {
                             }
 
                             return (
+
                                 <Link
                                     key={link.href}
                                     href={link.href}
@@ -145,6 +147,10 @@ export default function Navbar() {
                             <Button variant="primary" size="md">
                                 {cta.label}
                             </Button>
+                        </Link>
+                        <Link href={'tel:+18773600066'} className="flex items-center gap-2" target="_blank">
+                            <Call className="text-[#121c2a]"/>
+                           <strong>1 (877) 360-0066</strong>
                         </Link>
                     </nav>
 
